@@ -1,0 +1,2 @@
+rootProject.name='projectbrain'
+include ':app'

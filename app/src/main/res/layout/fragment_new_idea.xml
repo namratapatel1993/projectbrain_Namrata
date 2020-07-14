@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorAccent"
+    android:orientation="vertical"
+    android:gravity="center">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Project Brain"
+            android:textColor="@android:color/white"
+            android:textSize="40dp" />
+
+        <EditText
+            android:id="@+id/edtTitle"
+            android:hint="Title"
+            style="@style/textBoxStyle"
+            android:inputType="textEmailAddress"
+            android:layout_marginTop="18dp"/>
+
+        <EditText
+            android:id="@+id/edtContext"
+            android:layout_marginTop="20sp"
+            android:hint="Context"
+            style="@style/textBoxStyle"
+            android:inputType="textMultiLine"
+            android:lines="3"/>
+
+        <EditText
+            android:id="@+id/edtContent"
+            android:layout_marginTop="20sp"
+            android:hint="Content"
+            style="@style/textBoxStyle"
+            android:inputType="textMultiLine"
+            android:lines="5"/>
+
+        <Button
+            android:id="@+id/btnAddNewIdea"
+            style="@style/textBoxStyle"
+            android:layout_marginTop="15dp"
+            android:text="Add New Idea"/>
+
+
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorAccent"
+    android:orientation="vertical"
+    android:gravity="center">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:gravity="center">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Project Brain"
+            android:textColor="@android:color/white"
+            android:textSize="40dp" />
+
+        <Button
+            android:id="@+id/btnUserIdeas"
+            style="@style/textBoxStyle"
+            android:layout_marginTop="15dp"
+            android:text="View User Ideas"
+            android:textAllCaps="false"/>
+
+        <Button
+            android:id="@+id/btnUserToDo"
+            style="@style/textBoxStyle"
+            android:layout_marginTop="15dp"
+            android:text="To Do Ideas"
+            android:textAllCaps="false"/>
+
+        <Button
+            android:id="@+id/btnEditProfile"
+            style="@style/textBoxStyle"
+            android:layout_marginTop="15dp"
+            android:text="Edit Profile"
+            android:textAllCaps="false"/>
+
+        <Button
+            android:id="@+id/btnLogout"
+            style="@style/textBoxStyle"
+            android:layout_marginTop="15dp"
+            android:text="Log out"
+            android:textAllCaps="false"/>
+
+    </LinearLayout>
+
+</LinearLayout>
