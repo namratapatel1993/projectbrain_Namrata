@@ -37,7 +37,7 @@
 
             <EditText
                 android:id="@+id/edtSearch"
-                android:hint="Search by username"
+                android:hint="Search by title"
                 style="@style/textBoxStyle"
                 android:inputType="text"
                 android:textAlignment="center"

@@ -77,7 +77,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             StringEntity entity = new StringEntity(jsonParams.toString());
             entity.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
 
-            client.post(LoginActivity.this, "http://192.168.0.100:8080/contributor/login", entity, "application/json", new AsyncHttpResponseHandler() {
+            client.post(LoginActivity.this, "http://192.168.2.100:8080/contributor/login", entity, "application/json", new AsyncHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                     try {
@@ -85,10 +85,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         Log.i("Login","responseBody: " + json.toString());
 
                         Gson gson = new GsonBuilder().create();
+
                         LoginModel loginModel = gson.fromJson(new String(responseBody), LoginModel.class);
+
                         new StoreManager(LoginActivity.this).saveLoginData(loginModel.getUsername(),
-                                loginModel.getFirstname(), loginModel.getFirstname(), loginModel.getEmail(),
+                                loginModel.getFirstname(), loginModel.getLastname(), loginModel.getEmail(),
                                 loginModel.getCity());
+
+                        Log.i("Login","Login: " + new StoreManager(LoginActivity.this).getUsername());
 
                         startActivity(new Intent(LoginActivity.this, DashboardActivity.class));
                         finish();

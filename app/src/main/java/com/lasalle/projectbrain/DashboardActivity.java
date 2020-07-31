@@ -8,17 +8,21 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
+import com.lasalle.projectbrain.View.Fragment.CitePostFragment;
 import com.lasalle.projectbrain.View.Fragment.ComposePostFragment;
 import com.lasalle.projectbrain.View.Fragment.DashboardFragment;
 import com.lasalle.projectbrain.View.Fragment.EditProfileFragment;
 import com.lasalle.projectbrain.View.Fragment.IdeaListFragment;
+import com.lasalle.projectbrain.View.Fragment.OriginalPostFragment;
 import com.lasalle.projectbrain.View.Fragment.ProfileFragment;
+import com.lasalle.projectbrain.View.Fragment.SearchFragment;
 import com.lasalle.projectbrain.View.Fragment.TodoIdeaFragment;
 
 public class DashboardActivity extends AppCompatActivity implements View.OnClickListener{
 
     private Button btnListIdeas;
     private Button btnComposeIdea;
+    private Button btnSearchIdea;
     private Button btnSettings;
 
     @Override
@@ -31,9 +35,11 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
     public void initialization(){
         btnListIdeas = findViewById(R.id.btnListIdeas);
         btnComposeIdea = findViewById(R.id.btnComposeIdea);
+        btnSearchIdea = findViewById(R.id.btnSearchIdea);
         btnSettings = findViewById(R.id.btnSettings);
         btnListIdeas.setOnClickListener(this);
         btnComposeIdea.setOnClickListener(this);
+        btnSearchIdea.setOnClickListener(this);
         btnSettings.setOnClickListener(this);
 
         getSupportFragmentManager().beginTransaction().replace(R.id.container,
@@ -53,6 +59,11 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
                         ComposePostFragment.newInstance(), ComposePostFragment.class.getSimpleName()).commit();
                 break;
 
+                case R.id.btnSearchIdea:
+                getSupportFragmentManager().beginTransaction().replace(R.id.container,
+                        SearchFragment.newInstance(), SearchFragment.class.getSimpleName()).commit();
+                break;
+
             case R.id.btnSettings:
                 getSupportFragmentManager().beginTransaction().replace(R.id.container,
                         ProfileFragment.newInstance(), ProfileFragment.class.getSimpleName()).commit();
@@ -67,7 +78,9 @@ public class DashboardActivity extends AppCompatActivity implements View.OnClick
 
         if (fragment instanceof EditProfileFragment ||
         fragment instanceof TodoIdeaFragment ||
-        fragment instanceof IdeaListFragment) {
+        fragment instanceof IdeaListFragment ||
+        fragment instanceof OriginalPostFragment ||
+                fragment instanceof CitePostFragment) {
             getSupportFragmentManager().beginTransaction().remove(fragment);
         } else {
             finish();

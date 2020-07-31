@@ -256,6 +256,9 @@ public class PostModel {
         @SerializedName("id")
         @Expose
         private Integer id;
+        @SerializedName("citeId")
+        @Expose
+        private String citeId;
         @SerializedName("title")
         @Expose
         private String title;
@@ -293,12 +296,30 @@ public class PostModel {
             this.creator = creator;
         }
 
+        public Datum(Integer id, String citeId, String title, String context, String content, Creator creator) {
+            super();
+            this.id = id;
+            this.citeId = citeId;
+            this.title = title;
+            this.context = context;
+            this.content = content;
+            this.creator = creator;
+        }
+
         public Integer getId() {
             return id;
         }
 
         public void setId(Integer id) {
             this.id = id;
+        }
+
+        public String getCiteId() {
+            return citeId;
+        }
+
+        public void setCiteId(String citeId) {
+            this.citeId = citeId;
         }
 
         public String getTitle() {

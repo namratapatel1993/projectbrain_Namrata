@@ -4,22 +4,21 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.lasalle.projectbrain.R;
 import com.lasalle.projectbrain.StoreManager;
-import com.lasalle.projectbrain.adapters.IdeasAdapter;
-import com.lasalle.projectbrain.adapters.TodoAdapter;
 import com.lasalle.projectbrain.models.PostModel;
-import com.lasalle.projectbrain.models.RegistrationModel;
-import com.lasalle.projectbrain.models.TodoModel;
+import com.lasalle.projectbrain.models.SinglePostModel;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
@@ -34,46 +33,52 @@ import cz.msebera.android.httpclient.entity.StringEntity;
 import cz.msebera.android.httpclient.message.BasicHeader;
 import cz.msebera.android.httpclient.protocol.HTTP;
 
-public class IdeaListFragment extends Fragment {
 
-    public static IdeaListFragment newInstance() {
-        IdeaListFragment fragment = new IdeaListFragment();
+public class OriginalPostFragment extends Fragment {
+
+    public TextView txtTitle;
+    public TextView txtContext;
+    public TextView txtContent;
+    public TextView txtPostedBy;
+    public TextView txtCite;
+    public TextView txtToDo;
+    public TextView txtFollow;
+
+    private String citeId;
+
+    public static OriginalPostFragment newInstance(String citeId) {
+        OriginalPostFragment fragment = new OriginalPostFragment();
+        fragment.citeId = citeId;
         return fragment;
     }
-
-    private RecyclerView recyclerView;
-
-    private IdeasAdapter todoAdapter;
-
-    private ArrayList<PostModel.Datum> arrayUserTodos = new ArrayList<>();
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_list, container, false);
+        return inflater.inflate(R.layout.fragment_original_post,container,false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        recyclerView = view.findViewById(R.id.recyclerView);
-
-        initList();
-
-        initialization();
+        initialization(view);
     }
 
-    private void initList() {
-        todoAdapter = new IdeasAdapter(getActivity(), arrayUserTodos , "" + new StoreManager(getActivity()).getUsername());
+    public void initialization(View view){
+        this.txtTitle = (TextView) view.findViewById(R.id.txtTitle);
+        this.txtContext = (TextView) view.findViewById(R.id.txtContext);
+        this.txtContent = (TextView) view.findViewById(R.id.txtContent);
+        this.txtPostedBy = (TextView) view.findViewById(R.id.txtPostedBy);
+        this.txtCite = (TextView) view.findViewById(R.id.txtCite);
+        this.txtToDo = (TextView) view.findViewById(R.id.txtToDo);
+        this.txtFollow = (TextView) view.findViewById(R.id.txtFollow);
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.setAdapter(todoAdapter);
+        getPost();
     }
 
-    public void initialization(){
-        Log.i("TAG", "initialization: ");
+    public void getPost(){
         AsyncHttpClient client = new AsyncHttpClient();
-        client.get("http://192.168.2.100:8080/contributor/"+ new StoreManager(getActivity()).getUsername() + "/posts", new AsyncHttpResponseHandler() {
+        client.get("http://192.168.2.100:8080/post/?id="+ citeId, new AsyncHttpResponseHandler() {
 
             @Override
             public void onStart() {
@@ -92,12 +97,18 @@ public class IdeaListFragment extends Fragment {
                     JSONObject json = new JSONObject(new String(responseBody));
                     Log.i("Get ideas","responseBody: " + json.toString());
                     Gson gson = new GsonBuilder().create();
-                    PostModel postModel = gson.fromJson(new String(responseBody), PostModel.class);
+                    SinglePostModel userIdeaModel = gson.fromJson(new String(responseBody), SinglePostModel.class);
 
-                    arrayUserTodos.addAll(postModel.getData());
-                    todoAdapter.notifyDataSetChanged();
+                    txtTitle.setText("" + userIdeaModel.getTitle());
+                    txtContext.setText("" + userIdeaModel.getContext());
+                    txtContent.setText("" + userIdeaModel.getContent());
 
-                    initList();
+                    String creator = "";
+                    if (userIdeaModel.getCreator() != null && userIdeaModel.getCreator().getUsername() != null) {
+                        creator = "" + userIdeaModel.getCreator().getUsername();
+                    }
+
+                    txtPostedBy.setText("Contributed By: " + creator);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

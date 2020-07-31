@@ -66,7 +66,7 @@ public class TodoIdeaFragment extends Fragment {
 
     public void initialization(){
         AsyncHttpClient client = new AsyncHttpClient();
-        client.get("http://192.168.0.100:8080/contributor/"+ new StoreManager(getActivity()).getUsername() + "/todos", new AsyncHttpResponseHandler() {
+        client.get("http://192.168.2.100:8080/contributor/"+ new StoreManager(getActivity()).getUsername() + "/todos", new AsyncHttpResponseHandler() {
 
             @Override
             public void onStart() {

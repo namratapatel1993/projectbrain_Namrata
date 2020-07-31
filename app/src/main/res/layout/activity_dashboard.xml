@@ -38,6 +38,14 @@
             android:layout_marginRight="10dp"/>
 
         <Button
+            android:id="@+id/btnSearchIdea"
+            style="@style/textBoxStyle"
+            android:layout_width="0dp"
+            android:text="Search"
+            android:layout_weight="1"
+            android:layout_marginRight="10dp"/>
+
+        <Button
             android:id="@+id/btnSettings"
             style="@style/textBoxStyle"
             android:layout_width="0dp"

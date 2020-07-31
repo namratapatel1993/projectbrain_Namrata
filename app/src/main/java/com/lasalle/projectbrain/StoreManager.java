@@ -37,6 +37,12 @@ public class StoreManager {
     }
 
     public void clear() {
+        mEditor.remove("username");
+        mEditor.remove("email");
+        mEditor.remove("firstname");
+        mEditor.remove("lastname");
+        mEditor.remove("city");
+        mEditor.commit();
         mEditor.clear();
         mEditor.commit();
     }

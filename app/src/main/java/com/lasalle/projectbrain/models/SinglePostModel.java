@@ -4,34 +4,99 @@ import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class TodoModel {
+public class SinglePostModel {
 
-    @SerializedName("data")
+    @SerializedName("id")
     @Expose
-    private List<Datum> data = null;
+    private Integer id;
+    @SerializedName("citeId")
+    @Expose
+    private Object citeId;
+    @SerializedName("title")
+    @Expose
+    private String title;
+    @SerializedName("context")
+    @Expose
+    private String context;
+    @SerializedName("content")
+    @Expose
+    private String content;
+    @SerializedName("creator")
+    @Expose
+    private Creator creator;
 
     /**
      * No args constructor for use in serialization
      *
      */
-    public TodoModel() {
+    public SinglePostModel() {
     }
 
     /**
      *
-     * @param data
+     * @param creator
+     * @param context
+     * @param id
+     * @param title
+     * @param content
+     * @param citeId
      */
-    public TodoModel(List<Datum> data) {
+    public SinglePostModel(Integer id, Object citeId, String title, String context, String content, Creator creator) {
         super();
-        this.data = data;
+        this.id = id;
+        this.citeId = citeId;
+        this.title = title;
+        this.context = context;
+        this.content = content;
+        this.creator = creator;
     }
 
-    public List<Datum> getData() {
-        return data;
+    public Integer getId() {
+        return id;
     }
 
-    public void setData(List<Datum> data) {
-        this.data = data;
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Object getCiteId() {
+        return citeId;
+    }
+
+    public void setCiteId(Object citeId) {
+        this.citeId = citeId;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getContext() {
+        return context;
+    }
+
+    public void setContext(String context) {
+        this.context = context;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public Creator getCreator() {
+        return creator;
+    }
+
+    public void setCreator(Creator creator) {
+        this.creator = creator;
     }
 
     public class Creator {
@@ -140,110 +205,6 @@ public class TodoModel {
 
         public void setTodos(List<Object> todos) {
             this.todos = todos;
-        }
-
-    }
-
-    public class Datum {
-
-        @SerializedName("id")
-        @Expose
-        private Integer id;
-        @SerializedName("citeId")
-        @Expose
-        private String citeId;
-        @SerializedName("title")
-        @Expose
-        private String title;
-        @SerializedName("context")
-        @Expose
-        private String context;
-        @SerializedName("content")
-        @Expose
-        private String content;
-        @SerializedName("creator")
-        @Expose
-        private Creator creator;
-
-        /**
-         * No args constructor for use in serialization
-         *
-         */
-        public Datum() {
-        }
-
-        /**
-         *
-         * @param creator
-         * @param context
-         * @param id
-         * @param title
-         * @param content
-         */
-        public Datum(Integer id, String title, String context, String content, Creator creator) {
-            super();
-            this.id = id;
-            this.title = title;
-            this.context = context;
-            this.content = content;
-            this.creator = creator;
-        }
-
-        public Datum(Integer id, String citeId, String title, String context, String content, Creator creator) {
-            super();
-            this.id = id;
-            this.title = title;
-            this.context = context;
-            this.content = content;
-            this.creator = creator;
-        }
-
-        public Integer getId() {
-            return id;
-        }
-
-        public void setId(Integer id) {
-            this.id = id;
-        }
-
-        public String getCiteId() {
-            return citeId;
-        }
-
-        public void setCiteId(String citeId) {
-            this.citeId = citeId;
-        }
-
-        public String getTitle() {
-            return title;
-        }
-
-        public void setTitle(String title) {
-            this.title = title;
-        }
-
-        public String getContext() {
-            return context;
-        }
-
-        public void setContext(String context) {
-            this.context = context;
-        }
-
-        public String getContent() {
-            return content;
-        }
-
-        public void setContent(String content) {
-            this.content = content;
-        }
-
-        public Creator getCreator() {
-            return creator;
-        }
-
-        public void setCreator(Creator creator) {
-            this.creator = creator;
         }
 
     }

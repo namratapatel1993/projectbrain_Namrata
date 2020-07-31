@@ -85,7 +85,7 @@ public class DashboardFragment extends Fragment implements TextWatcher, View.OnC
 
     public void initialization(){
         AsyncHttpClient client = new AsyncHttpClient();
-        client.get("http://192.168.0.100:8080/posts", new AsyncHttpResponseHandler() {
+        client.get("http://192.168.2.100:8080/posts", new AsyncHttpResponseHandler() {
 
             @Override
             public void onStart() {
@@ -112,8 +112,6 @@ public class DashboardFragment extends Fragment implements TextWatcher, View.OnC
                     arrayUserIdeas.addAll(postModel.getData());
 
                     initList();
-
-                    initList();
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
@@ -133,7 +131,7 @@ public class DashboardFragment extends Fragment implements TextWatcher, View.OnC
 
     public void initializationByUsername(String username){
         AsyncHttpClient client = new AsyncHttpClient();
-        client.get("http://192.168.0.100:8080/contributor/"+ username + "/posts", new AsyncHttpResponseHandler() {
+        client.get("http://192.168.2.100:8080/contributor/"+ username + "/posts", new AsyncHttpResponseHandler() {
 
             @Override
             public void onStart() {

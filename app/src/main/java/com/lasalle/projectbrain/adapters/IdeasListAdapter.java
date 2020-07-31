@@ -10,8 +10,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.lasalle.projectbrain.DashboardActivity;
 import com.lasalle.projectbrain.R;
 import com.lasalle.projectbrain.StoreManager;
+import com.lasalle.projectbrain.View.Fragment.CitePostFragment;
+import com.lasalle.projectbrain.View.Fragment.IdeaListFragment;
+import com.lasalle.projectbrain.View.Fragment.OriginalPostFragment;
 import com.lasalle.projectbrain.models.PostModel;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -54,9 +58,15 @@ public class IdeasListAdapter extends RecyclerView.Adapter<IdeasListAdapter.View
         holder.txtTitle.setText("" + userIdeaModel.getTitle());
         holder.txtContext.setText("" + userIdeaModel.getContext());
         holder.txtContent.setText("" + userIdeaModel.getContent());
-        holder.txtPostedBy.setText("Contributed By: " + userIdeaModel.getCreator().getUsername());
 
-        if (userIdeaModel.getCreator().getUsername().equals("" + username)) {
+        String creator = "";
+        if (userIdeaModel.getCreator() != null && userIdeaModel.getCreator().getUsername() != null) {
+            creator = "" + userIdeaModel.getCreator().getUsername();
+        }
+
+        holder.txtPostedBy.setText("Contributed By: " + creator);
+
+        if (creator.equals("" + username)) {
             holder.txtCite.setVisibility(View.GONE);
             holder.txtToDo.setVisibility(View.GONE);
             holder.txtFollow.setVisibility(View.GONE);
@@ -66,12 +76,27 @@ public class IdeasListAdapter extends RecyclerView.Adapter<IdeasListAdapter.View
             holder.txtFollow.setVisibility(View.VISIBLE);
         }
 
-            holder.txtCite.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+        if (!("" + userIdeaModel.getCiteId()).equals("null")) {
+            holder.txtContext.setTextColor(((DashboardActivity) context).getResources().getColor(R.color.colorAccent));
+        }
 
+        holder.txtContext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!("" + userIdeaModel.getCiteId()).equals("null")) {
+                    ((DashboardActivity) context).getSupportFragmentManager().beginTransaction().add(R.id.container,
+                            OriginalPostFragment.newInstance(""+userIdeaModel.getCiteId()), OriginalPostFragment.class.getSimpleName()).commit();
                 }
-            });
+            }
+        });
+
+        holder.txtCite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((DashboardActivity) context).getSupportFragmentManager().beginTransaction().add(R.id.container,
+                        CitePostFragment.newInstance(""+userIdeaModel.getId(), userIdeaModel.getTitle()), CitePostFragment.class.getSimpleName()).commit();
+            }
+        });
 
         holder.txtToDo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,10 +106,11 @@ public class IdeasListAdapter extends RecyclerView.Adapter<IdeasListAdapter.View
         });
 
 
+        final String finalCreator = creator;
         holder.txtFollow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addFollow(userIdeaModel.getCreator().getUsername());
+                addFollow(finalCreator);
             }
         });
     }
@@ -116,7 +142,7 @@ public class IdeasListAdapter extends RecyclerView.Adapter<IdeasListAdapter.View
         }
     }
 
-    public void addFollow(String usernameToBeFollowed){
+    public void addFollow(final String usernameToBeFollowed){
         AsyncHttpClient client = new AsyncHttpClient();
         JSONObject jsonParams = new JSONObject();
         try {
@@ -126,14 +152,14 @@ public class IdeasListAdapter extends RecyclerView.Adapter<IdeasListAdapter.View
             StringEntity entity = new StringEntity(jsonParams.toString());
             entity.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
 
-            client.post(context, "http://192.168.0.100:8080/contributor/follow", entity, "application/json", new AsyncHttpResponseHandler() {
+            client.post(context, "http://192.168.2.100:8080/contributor/follow", entity, "application/json", new AsyncHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                     try {
                         JSONObject json = new JSONObject(new String(responseBody));
                         Log.i("Register","responseBody: " + json.toString());
 
-                        Toast.makeText(context, "Submited", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "you have followed " + usernameToBeFollowed, Toast.LENGTH_SHORT).show();
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -151,6 +177,7 @@ public class IdeasListAdapter extends RecyclerView.Adapter<IdeasListAdapter.View
     }
 
     public void addTodo(String id){
+
         AsyncHttpClient client = new AsyncHttpClient();
         JSONObject jsonParams = new JSONObject();
         try {
@@ -160,14 +187,14 @@ public class IdeasListAdapter extends RecyclerView.Adapter<IdeasListAdapter.View
             StringEntity entity = new StringEntity(jsonParams.toString());
             entity.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
 
-            client.post(context, "http://192.168.0.100:8080/add/todo", entity, "application/json", new AsyncHttpResponseHandler() {
+            client.post(context, "http://192.168.2.100:8080/add/todo", entity, "application/json", new AsyncHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                     try {
                         JSONObject json = new JSONObject(new String(responseBody));
                         Log.i("Register","responseBody: " + json.toString());
 
-                        Toast.makeText(context, "Submited", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "idea added in todo list.", Toast.LENGTH_SHORT).show();
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }

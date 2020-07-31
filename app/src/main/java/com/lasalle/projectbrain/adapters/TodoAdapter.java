@@ -10,7 +10,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.lasalle.projectbrain.DashboardActivity;
 import com.lasalle.projectbrain.R;
+import com.lasalle.projectbrain.View.Fragment.CitePostFragment;
+import com.lasalle.projectbrain.View.Fragment.OriginalPostFragment;
 import com.lasalle.projectbrain.models.TodoModel;
 
 import org.json.JSONException;
@@ -51,10 +54,25 @@ public class TodoAdapter extends RecyclerView.Adapter<TodoAdapter.ViewHolder> {
 
         holder.txtToDo.setVisibility(View.GONE);
 
+        if (!("" + userIdeaModel.getCiteId()).equals("null")) {
+            holder.txtContext.setTextColor(((DashboardActivity) context).getColor(R.color.colorAccent));
+        }
+
+        holder.txtContext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!("" + userIdeaModel.getCiteId()).equals("null")) {
+                    ((DashboardActivity) context).getSupportFragmentManager().beginTransaction().add(R.id.container,
+                            OriginalPostFragment.newInstance(userIdeaModel.getCiteId()), OriginalPostFragment.class.getSimpleName()).commit();
+                }
+            }
+        });
+
         holder.txtCite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                ((DashboardActivity) context).getSupportFragmentManager().beginTransaction().add(R.id.container,
+                        CitePostFragment.newInstance(""+userIdeaModel.getId(), userIdeaModel.getTitle()), CitePostFragment.class.getSimpleName()).commit();
             }
         });
 

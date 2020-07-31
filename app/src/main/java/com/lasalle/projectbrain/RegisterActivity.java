@@ -74,7 +74,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             StringEntity entity = new StringEntity(jsonParams.toString());
             entity.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
 
-            client.post(RegisterActivity.this, "http://192.168.0.100:8080/contributor/register", entity, "application/json", new AsyncHttpResponseHandler() {
+            client.post(RegisterActivity.this, "http://192.168.2.100:8080/contributor/register", entity, "application/json", new AsyncHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                     try {
@@ -86,7 +86,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
 
                         Log.i("Register","responseBody: " + registrationModel.getUsername());
 
-                        Toast.makeText(RegisterActivity.this, "Registered", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(RegisterActivity.this, "Registered, Now you can login.", Toast.LENGTH_SHORT).show();
 
                         startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
                         finish();

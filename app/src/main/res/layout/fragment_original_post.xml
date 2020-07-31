@@ -2,14 +2,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@android:color/darker_gray">
+    android:background="@android:color/darker_gray"
+    android:layout_marginTop="5dp"
+    android:clickable="true">
 
     <TextView
         android:id="@+id/txtTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
         android:textSize="24sp"
         tools:text="Android Development"
         android:layout_marginLeft="8dp"
@@ -19,6 +22,7 @@
         android:id="@+id/txtContext"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
         android:textSize="18sp"
         tools:text="Android Development for Final Semester"
         android:layout_marginLeft="8dp"
@@ -28,6 +32,7 @@
         android:id="@+id/txtContent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textColor="@android:color/black"
         android:textSize="14sp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
@@ -40,9 +45,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:padding="8dp"
+        android:textColor="@android:color/black"
         android:textSize="18sp"
-        tools:text="Posted By: Human"
-        android:visibility="gone"/>
+        tools:text="Posted By: Human" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -51,6 +56,7 @@
         android:layout_gravity="center_vertical"
         android:orientation="horizontal"
         android:gravity="center"
+        android:paddingBottom="8dp"
         android:visibility="gone">
 
         <TextView
@@ -63,6 +69,7 @@
             android:textSize="18sp"
             android:text="Cite"
             android:layout_gravity="right"
+            android:background="@android:color/black"
             android:layout_marginRight="10dp" />
 
         <TextView
@@ -75,7 +82,8 @@
             android:textSize="18sp"
             android:text="To Do"
             android:layout_gravity="right"
-            android:layout_marginRight="10dp"/>
+            android:layout_marginRight="10dp"
+            android:background="@android:color/black"/>
 
         <TextView
             android:id="@+id/txtFollow"
@@ -86,27 +94,7 @@
             android:textColor="@android:color/white"
             android:textSize="18sp"
             android:text="Follow"
-            android:layout_gravity="right"/>
+            android:layout_gravity="right"
+            android:background="@android:color/black"/>
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/txtDelete"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:padding="8dp"
-        android:textColor="@android:color/white"
-        android:textSize="18sp"
-        android:text="Delete"
-        android:layout_gravity="right"
-        android:background="@android:color/black"
-        android:layout_marginRight="10dp"/>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginLeft="24dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginRight="24dp"
-        android:layout_marginBottom="16dp" />
 </LinearLayout>

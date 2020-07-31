@@ -10,7 +10,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.lasalle.projectbrain.DashboardActivity;
 import com.lasalle.projectbrain.R;
+import com.lasalle.projectbrain.View.Fragment.CitePostFragment;
+import com.lasalle.projectbrain.View.Fragment.OriginalPostFragment;
 import com.lasalle.projectbrain.models.PostModel;
 import com.lasalle.projectbrain.models.TodoModel;
 import com.loopj.android.http.AsyncHttpClient;
@@ -54,25 +57,17 @@ public class IdeasAdapter extends RecyclerView.Adapter<IdeasAdapter.ViewHolder> 
         holder.txtContent.setText("" + userIdeaModel.getContent());
         holder.txtPostedBy.setText("Posted By: " + userIdeaModel.getCreator().getUsername());
 
-        holder.txtCite.setOnClickListener(new View.OnClickListener() {
+        if (!("" + userIdeaModel.getCiteId()).equals("null")) {
+            holder.txtContext.setTextColor(((DashboardActivity) context).getColor(R.color.colorAccent));
+        }
+
+        holder.txtContext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-            }
-        });
-
-        holder.txtToDo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
-
-
-        holder.txtFollow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
+                if (!("" + userIdeaModel.getCiteId()).equals("null")) {
+                    ((DashboardActivity) context).getSupportFragmentManager().beginTransaction().add(R.id.container,
+                            OriginalPostFragment.newInstance(""+userIdeaModel.getCiteId()), OriginalPostFragment.class.getSimpleName()).commit();
+                }
             }
         });
 
@@ -122,7 +117,7 @@ public class IdeasAdapter extends RecyclerView.Adapter<IdeasAdapter.ViewHolder> 
             StringEntity entity = new StringEntity(jsonParams.toString());
             entity.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
 
-            client.delete(context, "http://192.168.0.100:8080/post/remove?id=" + id, new AsyncHttpResponseHandler() {
+            client.delete(context, "http://192.168.2.100:8080/post/remove?id=" + id, new AsyncHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                     Toast.makeText(context, "Removed", Toast.LENGTH_SHORT).show();

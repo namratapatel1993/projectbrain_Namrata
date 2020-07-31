@@ -40,6 +40,7 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
 
     private Button btnRegister;
     private EditText edtUsername;
+    private EditText edtEmail;
     private EditText edtFirstname;
     private EditText edtLastname;
     private EditText edtCity;
@@ -63,11 +64,20 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
 
     public void initialization(View view){
         edtUsername = view.findViewById(R.id.edtUsername);
+        edtEmail = view.findViewById(R.id.edtEmail);
         edtFirstname = view.findViewById(R.id.edtFirstName);
         edtLastname = view.findViewById(R.id.edtLastName);
         edtCity = view.findViewById(R.id.edtCity);
         btnRegister = view.findViewById(R.id.btnRegister);
         btnRegister.setOnClickListener(this);
+
+        StoreManager storeManager = new StoreManager(getActivity());
+
+        edtUsername.setText("" + storeManager.getUsername());
+        edtEmail.setText("" + storeManager.get("email"));
+        edtFirstname.setText("" + storeManager.get("firstname"));
+        edtLastname.setText("" + storeManager.get("lastname"));
+        edtCity.setText("" + storeManager.get("city"));
     }
 
     @Override
@@ -88,7 +98,7 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
             StringEntity entity = new StringEntity(jsonParams.toString());
             entity.setContentType(new BasicHeader(HTTP.CONTENT_TYPE, "application/json"));
 
-            client.post(getActivity(), "http://192.168.0.100:8080/contributor/update", entity, "application/json", new AsyncHttpResponseHandler() {
+            client.post(getActivity(), "http://192.168.2.100:8080/contributor/update", entity, "application/json", new AsyncHttpResponseHandler() {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                     try {
@@ -101,7 +111,7 @@ public class EditProfileFragment extends Fragment implements View.OnClickListene
                         Log.i("Update Profile","responseBody: " + registrationModel.getUsername());
 
                         new StoreManager(getActivity()).saveLoginData(registrationModel.getUsername(),
-                                registrationModel.getFirstname(), registrationModel.getFirstname(), registrationModel.getEmail(),
+                                registrationModel.getFirstname(), registrationModel.getLastname(), registrationModel.getEmail(),
                                 registrationModel.getCity());
 
                         Toast.makeText(getActivity(), "Updated", Toast.LENGTH_SHORT).show();

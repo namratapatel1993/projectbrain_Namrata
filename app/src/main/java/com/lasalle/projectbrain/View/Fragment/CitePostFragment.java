@@ -1,6 +1,5 @@
 package com.lasalle.projectbrain.View.Fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,9 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.lasalle.projectbrain.LoginActivity;
 import com.lasalle.projectbrain.R;
-import com.lasalle.projectbrain.RegisterActivity;
 import com.lasalle.projectbrain.StoreManager;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
@@ -31,7 +28,7 @@ import cz.msebera.android.httpclient.message.BasicHeader;
 import cz.msebera.android.httpclient.protocol.HTTP;
 
 
-public class ComposePostFragment extends Fragment implements View.OnClickListener {
+public class CitePostFragment extends Fragment implements View.OnClickListener {
 
     private EditText edtTitle;
     private EditText edtContext;
@@ -39,8 +36,13 @@ public class ComposePostFragment extends Fragment implements View.OnClickListene
 
     private Button btnAddNewIdea;
 
-    public static ComposePostFragment newInstance() {
-        ComposePostFragment fragment = new ComposePostFragment();
+    private String citeId;
+    private String title;
+
+    public static CitePostFragment newInstance(String citeId, String title) {
+        CitePostFragment fragment = new CitePostFragment();
+        fragment.citeId = citeId;
+        fragment.title = title;
         return fragment;
     }
 
@@ -62,6 +64,10 @@ public class ComposePostFragment extends Fragment implements View.OnClickListene
         edtContent = view.findViewById(R.id.edtContent);
         btnAddNewIdea = view.findViewById(R.id.btnAddNewIdea);
         btnAddNewIdea.setOnClickListener(this);
+
+        edtContext.setText("" + title);
+        edtContext.setEnabled(false);
+        edtContext.setTextColor(getActivity().getResources().getColor(R.color.colorAccent));
     }
 
     @Override
@@ -82,6 +88,7 @@ public class ComposePostFragment extends Fragment implements View.OnClickListene
             String context = edtContext.getText().toString();
 
             jsonParams.put("title", title);
+            jsonParams.put("citeId", citeId);
             jsonParams.put("context", context);
             jsonParams.put("content", content);
             jsonParams.put("username","" + new StoreManager(getActivity()).getUsername());
